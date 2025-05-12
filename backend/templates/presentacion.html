@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Presentación Técnica - Dalia Díaz</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f9f9f9;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        code,
+        pre {
+            background: #eef;
+            padding: 6px 10px;
+            border-radius: 5px;
+            display: block;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <p><strong>Autora:</strong> Dalia Díaz</p>
+
+    <section>
+        <h2>🚀 Descripción General</h2>
+        <p>Este sistema fue desarrollado con <strong>Django</strong> y <strong>SQLite</strong>. Permite gestionar
+            empresas, productos, inventario, autenticación de usuarios con roles y funciones modernas como generación de
+            PDF, simulación de correo y una funcionalidad adicional de IA.</p>
+        <p>También puedes acceder a esta presentación como una vista HTML en el sistema: <a
+                href="/presentacion/">/presentacion/</a></p>
+    </section>
+
+    <section>
+        <h2>📂 Tecnologías Usadas</h2>
+        <ul>
+            <li>Django 3 + Django REST Framework</li>
+            <li>SQLite (desarrollo local)</li>
+            <li>ReportLab (para generar PDF)</li>
+            <li>Email backend consola (para pruebas de envío)</li>
+            <li>Postman para pruebas</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>👤 Usuarios y Autenticación</h2>
+        <p>Se utiliza un modelo personalizado <code>CustomUser</code> con dos roles:</p>
+        <ul>
+            <li><strong>admin</strong>: acceso total, puede gestionar todo.</li>
+            <li><strong>externo</strong>: solo puede consultar empresas y productos.</li>
+        </ul>
+        <pre>POST /api/login/</pre>
+        <code>{ "username": "usuario", "password": "contraseña" }</code>
+    </section>
+
+    <section>
+        <h2>📚 Funcionalidades</h2>
+        <ul>
+            <li><strong>Empresas</strong>: CRUD solo para admins. Externos pueden consultar.</li>
+            <li><strong>Productos</strong>: asociados a empresas. CRUD solo para admins.</li>
+            <li><strong>Inventario</strong>: muestra cantidades por producto y empresa.</li>
+            <li><strong>PDF</strong>: se puede descargar el inventario en formato PDF.</li>
+            <li><strong>Correo</strong>: se simula el envío de PDF por correo.</li>
+            <li><strong>IA</strong>: genera descripciones de producto automáticamente.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>🧪 Ejemplo de Prueba IA</h2>
+        <p>Endpoint:</p>
+        <pre>POST /api/generar-descripcion/</pre>
+        <code>{ "nombre": "Laptop Gamer", "caracteristicas": "Intel i9, 32GB RAM, RTX 4080" }</code>
+        <p>Respuesta esperada:</p>
+        <code>{ "descripcion_generada": "El producto 'Laptop Gamer' destaca por sus características..." }</code>
+    </section>
+
+    <section>
+        <h2>🔗 Endpoints Importantes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Método</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Login</td>
+                    <td>POST</td>
+                    <td><a href="/api/login/">/api/login/</a></td>
+                </tr>
+                <tr>
+                    <td>Empresas</td>
+                    <td>GET</td>
+                    <td><a href="/api/empresas/">/api/empresas/</a></td>
+                </tr>
+                <tr>
+                    <td>Productos</td>
+                    <td>GET</td>
+                    <td><a href="/api/productos/">/api/productos/</a></td>
+                </tr>
+                <tr>
+                    <td>Generar descripción (IA)</td>
+                    <td>POST</td>
+                    <td><a href="/api/generar-descripcion/">/api/generar-descripcion/</a></td>
+                </tr>
+                <tr>
+                    <td>Inventario (PDF)</td>
+                    <td>GET</td>
+                    <td><a href="/api/inventario/pdf/">/api/inventario/pdf/</a></td>
+                </tr>
+                <tr>
+                    <td>Enviar PDF (correo)</td>
+                    <td>GET</td>
+                    <td><a href="/api/inventario/enviar/">/api/inventario/enviar/</a></td>
+                </tr>
+                <tr>
+                    <td>Presentación técnica</td>
+                    <td>GET</td>
+                    <td><a href="/presentacion/">/presentacion/</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>⚙️ Configuraciones Técnicas</h2>
+        <ul>
+            <li>Permisos personalizados por rol usando <code>IsAdminOrReadOnly</code></li>
+            <li>Correo simulado con <code>EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'</code></li>
+            <li>Modelo <code>CustomUser</code> como <code>AUTH_USER_MODEL</code></li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>📝 Notas Finales</h2>
+        <ul>
+            <li>El sistema es fácilmente extensible a PostgreSQL o servicios externos de correo.</li>
+            <li>La IA puede conectarse con OpenAI usando una API Key real.</li>
+            <li>Todo el sistema fue probado y documentado con ejemplos funcionales.</li>
+        </ul>
+    </section>
+</body>
+
+</html>
